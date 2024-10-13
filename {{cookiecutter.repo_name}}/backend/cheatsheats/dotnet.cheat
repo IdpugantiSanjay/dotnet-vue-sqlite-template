@@ -1,0 +1,10 @@
+% dotnet
+
+# update outdated dotnet packages. *tool should be installed* (dotnet tool install --global dotnet-outdated-tool)
+dotnet outdated -r -u -i
+
+
+% dotnet
+
+# show outdated dotnet packages
+dotnet list package --outdated

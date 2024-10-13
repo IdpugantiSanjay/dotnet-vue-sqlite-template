@@ -1,0 +1,10 @@
+local-ci:
+    GCL_FILE=./gitlab/.gitlab-ci.yml gitlab-ci-local
+
+{% raw %}
+changelog VERSION=`git cliff --bumped-version`:
+  ./script/changelog.sh {{VERSION}}
+
+release VERSION=`git cliff --bumped-version`:
+  ./script/release.sh {{VERSION}}
+{% endraw %}

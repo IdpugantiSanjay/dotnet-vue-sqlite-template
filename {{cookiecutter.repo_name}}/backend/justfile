@@ -1,0 +1,28 @@
+
+startup_project := "{{ cookiecutter.api_project }}"
+
+lint:
+  dotnet format --verify-no-changes --verbosity diagnostic
+
+clean:
+  dotnet clean
+
+fmt:
+  dotnet format
+
+build:
+  dotnet build
+
+dev:
+  {% raw %}
+  DOTNET_WATCH_RESTART_ON_RUDE_EDIT=1 dotnet watch --project ./{{ startup_project }}
+  {% endraw %}
+
+test:
+  dotnet test
+
+{% raw %}
+# https://learn.microsoft.com/en-us/dotnet/core/rid-catalog#linux-rids
+publish OUTPUT='./publish' RUNTIME='{{ cookiecutter.server_runtime }}':
+  dotnet publish ./{{ startup_project }} -r {{RUNTIME}} -o {{OUTPUT}}
+{% endraw %}

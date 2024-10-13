@@ -1,0 +1,16 @@
+public_key := `{{ cookiecutter.public_key_path }}`
+private_key := `{{ cookiecutter.private_key_path }}`
+
+{% raw %}
+fmt:
+    terraform fmt
+
+validate: fmt
+    terraform validate
+
+plan: validate
+    @terraform plan -var default_user_ssh_public_key="{{public_key}}" -var default_user_ssh_private_key="{{private_key}}"
+
+apply: validate
+    @terraform apply -var default_user_ssh_public_key="{{public_key}}" -var default_user_ssh_private_key="{{private_key}}" -auto-approve
+{% endraw %}

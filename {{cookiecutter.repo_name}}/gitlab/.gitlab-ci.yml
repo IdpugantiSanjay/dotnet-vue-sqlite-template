@@ -1,0 +1,139 @@
+.runner_tags: &runner_tags
+  tags:
+    - build-server
+    - ubuntu
+
+stages:
+  - build
+  - test
+  - pre deploy
+  - deploy
+  - cleanup
+  - rollback
+
+build web:
+  stage: build
+  dependencies: []
+  <<: *runner_tags
+  script:
+    - npm run build
+    - tar -czf dist.tar.gz ./dist/
+  before_script:
+    - cd ./web
+    - npm install
+  artifacts:
+    paths:
+      - ./web/dist.tar.gz
+
+
+build backend:
+  stage: build
+  dependencies: []
+  <<: *runner_tags
+  script:
+    - just publish
+    - tar -czf publish.tar.gz ./publish/
+    - echo "BUILD_DATE=$(date --iso-8601=seconds)" > vars.env
+    - echo "BUILD_HASH=$(sha256sum publish.tar.gz | awk '{ print $1 }')" >> vars.env
+  before_script:
+    - cd ./backend
+  artifacts:
+    paths:
+      - ./backend/publish.tar.gz
+    reports:
+      dotenv: ./backend/vars.env
+
+lint web:
+  stage: test
+  dependencies: [build web]
+  <<: *runner_tags
+  script:
+    - just lint
+  before_script:
+    - cd ./web
+    - npm install
+
+lint backend:
+  stage: test
+  dependencies: [build backend]
+  <<: *runner_tags
+  before_script:
+   - cd ./backend
+  script:
+    - just lint
+  
+lint secrets:
+  stage: test
+  dependencies: []
+  <<: *runner_tags
+  script:
+    - gitleaks detect --source . -v
+
+check for typos:
+  stage: test
+  dependencies: []
+  <<: *runner_tags
+  script:
+    - typos
+
+
+lint shell scripts:
+  stage: test
+  dependencies: []
+  <<: *runner_tags
+  script:
+    - shellcheck $(find ./ -type f -name '*.sh')
+  
+lint .env files:
+  stage: test
+  dependencies: []
+  <<: *runner_tags
+  script:
+    - dotenv-linter $(find ./ -type f -name '.env')
+
+run migrations:
+  stage: pre deploy
+  dependencies: []
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+    - if: '$CI_COMMIT_TAG =~ /^v?\d+\.\d+\.\d+$/'
+  <<: *runner_tags
+  script:
+    - ./script/run-migrations.sh $SERVER
+
+deploy api:
+  stage: deploy
+  dependencies:
+    - build backend
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+    - if: '$CI_COMMIT_TAG =~ /^v?\d+\.\d+\.\d+$/'
+  <<: *runner_tags
+  before_script:
+    - cd ./backend
+  script:
+    - tar -xzf publish.tar.gz
+    - ./script/deploy.sh $SERVER
+  after_script:
+    - rm ./backend/publish.tar.gz
+    - rm -rf ./backend/publish
+
+
+deploy web:
+  stage: deploy
+  dependencies:
+    - build web
+  variables:
+    GIT_STRATEGY: none
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+    - if: '$CI_COMMIT_TAG =~ /^v?\d+\.\d+\.\d+$/'
+  <<: *runner_tags
+  before_script:
+    - cd ./web
+  script:
+    - tar -xzf dist.tar.gz
+    - ./script/deploy.sh $SERVER
+  after_script:
+    - rm ./web/dist.tar.gz
+    - rm -rf ./web/dist

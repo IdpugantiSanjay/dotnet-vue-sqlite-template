@@ -1,0 +1,21 @@
+{
+    "repo_name": null,
+    "web_url": "https://localhost:3000",
+    "year": "{% now 'utc', '%Y' %}",
+    "gitlab_repo_url": null,
+    "author": "Leo Sanchez",
+    "server_user": "atlas",
+    "server_runtime": ["linux-arm64", "linux-x64"],
+    "api_project": "{{ cookiecutter.repo_name | title | replace('-', '') }}.Api",
+    "backend_deploy_path": "/home/{{ cookiecutter.server_user }}/{{ cookiecutter.repo_name }}/publish",
+    "migrations_path": "/home/{{ cookiecutter.server_user }}/{{ cookiecutter.repo_name }}/db/migrations",
+    "database_dir": "/home/{{ cookiecutter.server_user }}/{{ cookiecutter.repo_name }}/db",
+    "masterdb_path": "/home/{{ cookiecutter.server_user }}/{{ cookiecutter.repo_name }}/db/master.db",
+    "web_deploy_path": ["/usr/share/nginx/html", "/var/www/html"],
+    "private_key_path": null,
+    "public_key_path": null,
+    "license": ["FSL-1.1-ALv2", "FSL-1.1-MIT"],
+    "_copy_without_render": [
+        "cliff.toml"
+    ]
+}

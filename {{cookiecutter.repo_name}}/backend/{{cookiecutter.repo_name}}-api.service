@@ -1,0 +1,24 @@
+[Unit]
+Description={{ cookiecutter.repo_name }} Api
+
+[Service]
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+WorkingDirectory=
+ExecStart=
+Restart=always
+# Restart service after 10 seconds if the dotnet service crashes:
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier={{ cookiecutter.repo_name }}-api
+User={{ cookiecutter.repo_name }}
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_NOLOGO=true
+Environment=ConnectionStrings__DefaultConnection=
+Environment=ASPNETCORE_URLS=http://0.0.0.0:5000/
+Environment=Logging__Serilog__File__Path=/var/log/{{ cookiecutter.repo_name }}-api/log.txt
+Environment=Seq__API_KEY=
+Environment=Seq__Url=
+
+[Install]
+WantedBy=multi-user.target

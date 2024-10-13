@@ -1,0 +1,69 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Project Structure:
+
+```
+├── backend
+│   ├── cheatsheats
+│   │   └── dotnet.cheat
+│   ├── {{cookiecutter.repo_name}}-api.service
+│   ├── databases
+│   ├── db
+│   │   ├── justfile
+│   │   ├── migrations
+│   │   └── schema.sql
+│   ├── gobackup
+│   │   └── gobackup.yml
+│   ├── justfile
+│   ├── README
+│   └── script
+│       └── deploy.sh
+├── CHANGELOG
+├── cliff.toml
+├── gitlab
+│   └── justfile
+├── justfile
+├── lefthook.yml
+├── LICENSE
+├── README
+├── script
+│   ├── bootstrap.sh
+│   ├── changelog.sh
+│   ├── release.sh
+│   └── run-migrations.sh
+├── terraform
+│   ├── build-server
+│   │   ├── cloud-init.yaml.tpl
+│   │   ├── justfile
+│   │   ├── main.tf
+│   │   ├── output.tf
+│   │   └── variables.tf
+│   ├── deployment-server
+│   │   ├── cloud-init.yaml.tpl
+│   │   ├── justfile
+│   │   ├── main.tf
+│   │   ├── output.tf
+│   │   └── variables.tf
+│   └── README
+└── web
+    ├── biome.jsonc
+    ├── cheatsheats
+    │   └── npm.cheat
+    ├── justfile
+    ├── oxlintrc.json
+    ├── README
+    └── script
+        └── deploy.sh
+```

@@ -1,0 +1,19 @@
+#!/usr/bin/env just --justfile
+export PATH := "./node_modules/.bin:" + env_var('PATH')
+
+build:
+    npm run build
+
+dev:
+    npm run dev
+
+lint:
+    oxlint -D suspicious --import-plugin --promise-plugin --security-plugin --vitest-plugin ./src
+    biome ci ./src
+
+fmt:
+    biome check --write --unsafe ./src
+
+fix:
+    oxlint -D suspicious --import-plugin --promise-plugin --security-plugin --vitest-plugin ./src --fix
+    biome lint --write --unsafe ./src

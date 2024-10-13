@@ -1,0 +1,26 @@
+pre-commit:
+  parallel: true
+  commands:
+    typos:
+      run: typos {staged_files}
+    gitleaks:
+      run: gitleaks protect --staged -v
+    backend lint:
+      glob: "*.{cs, csproj}"
+      root: "backend/"
+      run: dotnet format --verify-no-changes --verbosity diagnostic
+    backend build:
+      root: "backend/"
+      run: "just build"
+    web lint:
+      root: "web/"
+      run: "just lint"
+    web build:
+      root: "web/"
+      run: "just build"
+    todo:
+      run: rg 'TODO:' -g '!lefthook.yml' -g '!justfile' && exit 1 || exit 0
+    shellcheck:
+      run: shellcheck $(find ./ -type f -name '*.sh')
+    dotenv-linter:
+      run: dotenv-linter $(find ./ -type f -name '.env')

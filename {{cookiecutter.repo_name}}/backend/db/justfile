@@ -1,0 +1,22 @@
+set dotenv-required := true
+
+schema:
+    sqlite3 $MASTER_DB_PATH .schema
+  
+dev:
+    sql-studio sqlite $MASTER_DB_PATH
+    xdg-open "http://127.0.0.1:3030"
+
+status:
+    goose status
+
+{% raw %}
+new-migration MIGRATION_NAME:
+    goose create {{MIGRATION_NAME}} sql
+{% endraw %}
+
+down-migration:
+    goose down
+
+run-migration:
+    goose up

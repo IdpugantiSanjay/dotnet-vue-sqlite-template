@@ -1,0 +1,13 @@
+% vite
+
+# show bundle visualization
+npx vite-bundle-visualizer -t <visualization>
+
+$ visualization: printf "sunburst\nnetwork\ntreemap\n" | fzf
+
+
+
+% npm
+
+# show outdates packages
+npm outdated

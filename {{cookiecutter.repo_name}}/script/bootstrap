@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+
+
+for prog in git terraform fzf curl dotnet ufw node npm wget sqlite3 just shellcheck btop gitleaks typos hurl dotenv-linter git-cliff envsubst gitlab-runner gobackup rg sql-studio xdg-open goose;
+do 
+    command -v "$prog" >/dev/null 2>&1 && printf "" || echo "$prog is not installed"; 
+done
