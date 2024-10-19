@@ -1,5 +1,4 @@
 {% raw %}
-
 set dotenv-required := true
 
 [private]
@@ -8,9 +7,9 @@ open URL:
 
 view NAVIGATION=`echo -e "pipelines\nissues\nmerge_requests\ntags\ncommits\nbranches\nreleases" | fzf`:
     echo {{NAVIGATION}}
-    just open "$GITLAB_PROJECT_URL/-/{{NAVIGATION}}"
+    just open "$PROJECT_URL/-/{{NAVIGATION}}"
     
-repo: (open "$GITLAB_PROJECT_URL")
+repo: (open "$PROJECT_URL")
 
-container_registry: (open "$GITLAB_PROJECT_URL/container_registry")
+container_registry: (open "$PROJECT_URL/container_registry")
 {% endraw %}

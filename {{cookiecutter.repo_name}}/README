@@ -1,18 +1,4 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Project Structure:
+### Project Structure:
 
 ```
 ├── backend
@@ -21,10 +7,16 @@ Project Structure:
 │   ├── {{cookiecutter.repo_name}}-api.service
 │   ├── databases
 │   ├── db
+│   │   ├── .envrc
 │   │   ├── justfile
 │   │   ├── migrations
 │   │   └── schema.sql
+│   ├── .editorconfig
+│   ├── .env
+│   ├── .envrc
+│   ├── .gitignore
 │   ├── gobackup
+│   │   ├── .envrc
 │   │   └── gobackup.yml
 │   ├── justfile
 │   ├── README
@@ -32,17 +24,24 @@ Project Structure:
 │       └── deploy.sh
 ├── CHANGELOG
 ├── cliff.toml
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING
+├── .envrc
 ├── gitlab
+│   ├── .env
+│   ├── .gitlab-ci.yml
 │   └── justfile
+├── .hasrc
 ├── justfile
 ├── lefthook.yml
 ├── LICENSE
 ├── README
 ├── script
-│   ├── bootstrap.sh
+│   ├── bootstrap
 │   ├── changelog.sh
 │   ├── release.sh
-│   └── run-migrations.sh
+│   ├── run-migrations.sh
+│   └── test
 ├── terraform
 │   ├── build-server
 │   │   ├── cloud-init.yaml.tpl
@@ -57,10 +56,14 @@ Project Structure:
 │   │   ├── output.tf
 │   │   └── variables.tf
 │   └── README
+├── .tmux.sh
 └── web
     ├── biome.jsonc
     ├── cheatsheats
     │   └── npm.cheat
+    ├── .envrc
+    ├── .gitignore
+    ├── .hasrc
     ├── justfile
     ├── oxlintrc.json
     ├── README

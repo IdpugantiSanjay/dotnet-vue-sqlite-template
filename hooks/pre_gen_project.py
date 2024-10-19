@@ -13,17 +13,6 @@ def check_for_file_presence() -> Optional[str]:
             return file
 
 
-def check_repo_url(repo_url: str) -> bool:
-    try:
-        subprocess.run(
-            ["git", "ls-remote", "--exit-code", "-h", repo_url],
-            capture_output=True,
-            check=True,
-        )
-        return True
-    except Exception:
-        return False
-
 
 if __name__ == "__main__":
     result = check_for_file_presence()

@@ -1,0 +1,12 @@
+{
+  "default_context": {
+    "remote_url": "git@gitlab.com:homelab-automation-scripts/cookiecutter.git",
+    "project_url": "https://gitlab.com/homelab-automation-scripts/cookiecutter",
+    "repo_name": "password-manager",
+    "private_key_path": "",
+    "public_key_path": "",
+    "web_deploy_path": "/usr/share/nginx/html",
+    "license": "FSL-1.1-ALv2",
+    "server_runtime": "linux-arm64"
+  }
+}

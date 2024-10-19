@@ -69,10 +69,10 @@ def initialize_backend():
 
 def add_version_control():
     subprocess.call(["git", "init"])
-    subprocess.call(['git', 'remote', 'add', 'origin', '{{ cookiecutter.repo_url }}'])
+    subprocess.call(['git', 'remote', 'add', 'origin', '{{ cookiecutter.remote_url }}'])
     subprocess.call(["git", "add", "*"])
     subprocess.call(["git", "commit", "-m", "Bootstrapped project from cookiecutter"])
-    # subprocess.call(["git", "push"])
+    subprocess.call(["git", "push"])
 
 
 if __name__ == "__main__":
