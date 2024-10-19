@@ -2,7 +2,7 @@
     "repo_name": null,
     "web_url": "https://localhost:3000",
     "year": "{% now 'utc', '%Y' %}",
-    "gitlab_repo_url": null,
+    "repo_url": null,
     "author": "Leo Sanchez",
     "server_user": "atlas",
     "server_runtime": ["linux-arm64", "linux-x64"],
